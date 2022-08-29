@@ -27,9 +27,14 @@
   shell: "ip a show {{proxy_public_interface}} | egrep '^ *inet ' | awk '{printf substr($2, 1, length($2)-3)}'"
   register: public_ip
   changed_when: false
-- name: copy iptables rules to iptables.up.rules
+- name: copy script ssh-redirect
   template:
-    src: iptables.up.rules.j2
-    dest: "{{proxy_iptables_file}}"
-    mode: "0775"
-  notify: apply ssh iptables rules 
+    src: "iptables-ssh.sh.j2"
+    dest: "{{proxy_ssh_script}}"
+    mode: '0755'
+  notify: apply ssh iptables rules
+- name: copy service file ssh-redirect
+  template:
+    src: "iptables-ssh-redirect.service.j2"
+    dest: /etc/systemd/system/ssh-redirect.service
+  notify: apply ssh iptables rules
