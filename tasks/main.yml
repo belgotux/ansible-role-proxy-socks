@@ -1,0 +1,25 @@
+---
+# tasks file for proxy
+
+- name: install danted
+  apt:
+    pkg:
+      - dante-server
+    state: latest
+    update_cache: yes
+- name: copy config file
+  template:
+    src: danted.conf.j2
+    dest: /etc/danted.conf
+  notify: restart danted
+#TODO possibility password direct via vault
+- name: create proxy socks users
+  user:
+    name: "{{item.name}}"
+    password: "{{item.passhash}}"
+    state: present
+    shell: /bin/false
+    groups: users
+    system: yes
+  loop: "{{proxy_socks_users}}"
+
