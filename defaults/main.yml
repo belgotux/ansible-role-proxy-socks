@@ -5,3 +5,9 @@ proxy_socks_port:
 proxy_socks_users:
   - name: default_user_proxy_socks
     passhash: $y$yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+port_ssh: 22
+proxy_second_ports_ssh:
+  - 2222
+  - 465
+proxy_public_interface: eth0
+proxy_iptables_file: /etc/network/iptables.up.rules

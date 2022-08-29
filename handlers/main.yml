@@ -1,5 +1,11 @@
 ---
 # handlers file for proxy
+- name: apply ssh iptables rules
+  shell: iptables-restore {{proxy_iptables_file}}
+  retries: 2
+  delay: 3
+  register: result
+  until: result.rc == 0
 
 - name: restart danted
   systemd:

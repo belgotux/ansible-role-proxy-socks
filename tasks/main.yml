@@ -23,3 +23,13 @@
     system: yes
   loop: "{{proxy_socks_users}}"
 
+- name: Get public IP
+  shell: "ip a show {{proxy_public_interface}} | egrep '^ *inet ' | awk '{printf substr($2, 1, length($2)-3)}'"
+  register: public_ip
+  changed_when: false
+- name: copy iptables rules to iptables.up.rules
+  template:
+    src: iptables.up.rules.j2
+    dest: "{{proxy_iptables_file}}"
+    mode: "0775"
+  notify: apply ssh iptables rules 

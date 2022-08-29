@@ -1,0 +1,7 @@
+*nat
+:SSH_REDIRECT - [0:0]
+-A PREROUTING -j SSH_REDIRECT
+{% for item in proxy_second_ports_ssh %}
+-A SSH_REDIRECT -i {{proxy_public_interface}} -p tcp --dport {{item}} -j DNAT --to-destination {{public_ip.stdout}}:{{port_ssh}} -m comment --comment "proxy_second_ports"
+{% endfor %}
+COMMIT
