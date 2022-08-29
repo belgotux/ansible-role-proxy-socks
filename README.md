@@ -19,6 +19,7 @@ Role Variables
     passhash: $y$yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
 ```
 - `port_ssh` : original port of the ssh service (default `22`)
+- `proxy_ssh_script`: location for the startup script (default `/usr/local/sbin/iptables-ssh.sh`)
 - `proxy_second_ports_ssh`: list of ports redirect to SSH original port (default [2222,465])
 - `proxy_public_interface`: public interface to listen for second ports ssh (default `eth0`)
 
